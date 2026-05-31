@@ -16,7 +16,7 @@
 #define EP0_SIZE 64
 
 typedef struct {
-    uint16_t r, l;
+    uint16_t l, r;
 } AudioSample;
 
 static struct {
@@ -78,12 +78,12 @@ static void handle_audio_ep(usbd_device *dev, uint8_t event, uint8_t ep){
     for(int i = 0; i != num_of_samples; i++){
         int16_t *samples = (int16_t *)(buf + i*4);
 
-        int16_t r_chan = audio_clamp((samples[0] + 0x8000) >> 6);
-        int16_t l_chan = audio_clamp((samples[1] + 0x8000) >> 6);
+        int16_t l_chan = audio_clamp((samples[0] + 0x8000) >> 6);
+        int16_t r_chan = audio_clamp((samples[1] + 0x8000) >> 6);
 
         AudioSample res = {
-            .r = (uint16_t)(r_chan),
             .l = (uint16_t)(l_chan),
+            .r = (uint16_t)(r_chan),
         };
         push_wheel(res);
 
@@ -357,8 +357,8 @@ void TIM2_IRQHandler(){
 
             if(has_data){
                 AudioSample sample = pop_wheel();
-                TIM2->CCR2 = sample.l;
-                TIM2->CCR1 = sample.r;
+                TIM2->CCR1 = sample.l;
+                TIM2->CCR2 = sample.r;
             }
         }
     }

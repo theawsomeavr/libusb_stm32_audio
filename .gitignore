@@ -1,0 +1,5 @@
+compile_commands.json
+nob
+nob.cpp
+.cache
+obj/
