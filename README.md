@@ -10,5 +10,9 @@ and uses timer's 2 PWM outputs on pins *A0* and *A1* for the left and right
 channels respectively. When receiving audio packets, PC13 toggles to indicate
 USB activity.
 
+The also well developed [LUFA](https://github.com/abcminiuser/lufa) USB library
+was used as a reference to this project as well as providing the device configuration
+descriptor on its LowLevel/AudioOutput example
+
 ## Build and flash
 Simply run **make** followed by **make flash**, assuming you are using an st-link with st-flash
